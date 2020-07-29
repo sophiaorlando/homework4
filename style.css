@@ -34,7 +34,7 @@ box-shadow: 0 0 10px 2px;
 .btn:hover{
     border-color:black;
 }
-.start-btn, .next-btn{
+.start-btn, .next-btn, .restart-btn{
     font-size: 30px;
 
 }

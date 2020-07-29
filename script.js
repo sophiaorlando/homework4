@@ -1,9 +1,12 @@
 var startButton = document.querySelector("#start-btn")
 var questionContainerEl = document.querySelector("#question-container")
+var restartButton = document.querySelector("#restart-btn")
 var nextButton = document.querySelector("#next-btn")
 var question = document.querySelector("#question")
 var score = 0
 var indexG = 0
+var timer = 0
+var counter = -1
 var buttonanswer = document.querySelector(".buttonanswer")
 var btn1 = document.querySelector(".btn-1")
 var btn2 = document.querySelector(".btn-2")
@@ -36,10 +39,11 @@ var dataStructure = [
 ]
 
 startButton.addEventListener('click', startGame)
-nextButton.addEventListener('click', setNextQuestion)
-buttonanswer.addEventListener('click', selectAnswer)
+nextButton.addEventListener('click', setNextQuestion,)
+restartButton.addEventListener('click', startGame)
 
-var counter = -1
+
+
 
 //------------------FUNCTIONS------------------
 
@@ -48,9 +52,11 @@ function startGame() {
     display = document.querySelector('#time');
     startTimer(fiveMinutes, display);
     startButton.classList.add('hide')
+    restartButton.classList.add('hide')
     questionContainerEl.classList.remove('hide')
     nextButton.classList.remove('hide')
     setNextQuestion()
+
 
 }
 
@@ -58,46 +64,82 @@ function setNextQuestion() {
     counter++
     if (dataStructure[counter]) {
         var currentQuestionObj = dataStructure[counter]
-        questionContainerEl.innerHTML = ""
         console.log(currentQuestionObj)
-        var question = document.createElement("h1")
         question.textContent = currentQuestionObj.question
-        questionContainerEl.appendChild(question)
-        for (var index = 0; index < currentQuestionObj.answers.length; index++) {
-            var answers = document.createElement("button")
-            answers.textContent = currentQuestionObj.answers[index]
-            answers.setAttribute("class", "btn")
-            questionContainerEl.appendChild(answers)
-        }
+        btn1.textContent = currentQuestionObj.answers[0]
+        btn1.addEventListener("click", btn1check)
+        btn2.textContent = currentQuestionObj.answers[1]
+        btn2.addEventListener("click", btn2check)
+        btn3.textContent = currentQuestionObj.answers[2]
+        btn3.addEventListener("click", btn3check)
+        btn4.textContent = currentQuestionObj.answers[3]
+        btn4.addEventListener("click", btn4check)
+    }
+    if (counter == dataStructure.length) {
+        startButton.classList.add('hide')
+        questionContainerEl.classList.add('hide')
+        nextButton.classList.add('hide')
+        restartButton.classList.remove('hide')
+
     }
 
+
 }
-// counter++
-
-
-function selectAnswer() {
-    console.log("made it")
-    var userSelectedAnswer = (currentQuestionObj.question)
-    var correctAnswer = (currentQuestionObj.correctAnswer)
-    if (userSelectedAnswer === correctAnswer) {
+function btn1check() {
+    currentQuestionObj = dataStructure[counter]
+    if (btn1.textContent == currentQuestionObj.correctAnswer) {
         score++
         console.log("Correct!")
     } else {
         console.log("Oops, that's wrong!")
-        fiveMinutes--
+        timer--
     }
-    currentQuestionObj = dataStructure[indexG + 1]
-    scoreValue.textContent = "score"
-    body.appendChild(scoreValue)
-    //renderQuestion()
+    scoreValue.textContent = score
 }
+function btn2check() {
+    currentQuestionObj = dataStructure[counter]
+    if (btn2.textContent == currentQuestionObj.correctAnswer) {
+        score++
+        console.log("Correct!")
+    } else {
+        console.log("Oops, that's wrong!")
+        timer--
+    }
+    scoreValue.textContent = score
+}
+function btn3check() {
+    currentQuestionObj = dataStructure[counter]
+    if (btn3.textContent == currentQuestionObj.correctAnswer) {
+        score++
+        console.log("Correct!")
+    } else {
+        console.log("Oops, that's wrong!")
+        timer--
+    }
+    scoreValue.textContent = score
+}
+function btn4check() {
+    currentQuestionObj = dataStructure[counter]
+    if (btn4.textContent == currentQuestionObj.correctAnswer) {
+        score++
+        console.log("Correct!")
+    } else {
+        console.log("Oops, that's wrong!")
+        timer--
+    }
+    scoreValue.textContent = score
+
+}
+
+
 
 
 
 
 //----------------------------TIMER------------------------
 function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
+    timer = duration
+    // , minutes, seconds;
     setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
